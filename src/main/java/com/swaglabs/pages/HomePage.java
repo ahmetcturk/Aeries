@@ -1,20 +1,21 @@
 package com.swaglabs.pages;
 
 import com.swaglabs.utils.HelperMethods;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.List;
-
 import static com.swaglabs.base.BasePage.driver;
 
+
 public class HomePage {
-    @FindBy(xpath = "//div[@class='app_logo']")
+    @FindBy(xpath = "//img[contains(@alt, 'Aeries Software')]")
     private static WebElement appLogo;
 
-    @FindBy(xpath = "//div[@class = 'inventory_item_name']")
-    private static List<WebElement> itemList;
+    @FindBy(xpath = "//span[contains(.,\'About Us\')]")
+    private static WebElement aboutUsLink;
 
 
     public HomePage() {
@@ -29,13 +30,12 @@ public class HomePage {
         return HelperMethods.doGetPageTitle();
     }
 
-    public static void clickItem(String itemName) {
-        for (WebElement item : itemList) {
-            if (item.getText().equals(itemName)) {
-                HelperMethods.doClick(item);
-                break;
-            }
-        }
+    public static String isAboutLinkWork(){
+        HelperMethods.clickWithJS(aboutUsLink);
+        HelperMethods.getWaitUrl("https://www.aeries.com/about/");
+        String actualUrl = HelperMethods.getCurrentURL();
+        System.out.println(actualUrl);
+        return actualUrl;
     }
 
 }

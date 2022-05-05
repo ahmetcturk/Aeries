@@ -15,7 +15,7 @@ public class BasePage {
 
     public static WebDriver initializeDriver(){
         String browser  =  "chrome";
-        String baseURL = "https://www.saucedemo.com/";
+        String baseURL = "https://www.aeries.com";
         switch (browser){
             case  "chrome":
                 WebDriverManager.chromedriver().setup();

@@ -1,9 +1,9 @@
 package com.swaglabs.utils;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import static com.swaglabs.base.BasePage.driver;
 
 public class HelperMethods {
@@ -21,7 +21,19 @@ public class HelperMethods {
         try {
             waitForClickability(element);
             element.click();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
+            System.out.println("Some exception occurred while clicking at " + element);
+        }
+    }
+
+    public  static void clickWithJS(WebElement element){
+        try {
+            waitForClickability(element);
+            JavascriptExecutor jse = (JavascriptExecutor) driver;
+            jse.executeScript("arguments[0].click()", element);
+        }
+        catch (Exception e) {
             System.out.println("Some exception occurred while clicking at " + element);
         }
     }
@@ -54,6 +66,10 @@ public class HelperMethods {
 
     }
 
+    public static void getWaitUrl(String Url){
+        getWaitObject().until(webDriver -> getCurrentURL().equals(Url));
+    }
+
     public static WebDriverWait getWaitObject() {
         return new WebDriverWait(driver, com.swaglabs.utils.Constants.EXPLICIT_WAIT_TIME);
     }
@@ -74,6 +90,4 @@ public class HelperMethods {
             return null;
         }
     }
-
-
 }
